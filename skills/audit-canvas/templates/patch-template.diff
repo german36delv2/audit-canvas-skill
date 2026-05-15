@@ -1,0 +1,67 @@
+# Patch template — audit-canvas
+#
+# How to use:
+# 1. One patch per finding. Name it audit-canvas/patches/<id>-<slug>.patch
+#    Example: audit-canvas/patches/C1-mass-assignment.patch
+# 2. Use unified diff format (3 context lines minimum).
+# 3. Patches must apply with: git apply --check audit-canvas/patches/<file>.patch
+# 4. NEVER include changes that are not directly required by this finding.
+# 5. NEVER include compiled assets, lockfile churn, or formatter sweeps.
+# 6. Add a short header explaining the finding so the patch is self-documenting.
+#
+# ---- Header (first lines of every patch file) ----
+# audit-canvas finding C1 — Mass assignment of role_id in ProfileController
+# Severity: Critical
+# Impact:   Authenticated user can set role_id and become admin.
+# Fix:      Replace $request->all() with $request->validated() backed by a
+#           FormRequest that omits role_id from the rules array.
+# ---- End header ----
+
+diff --git a/app/Http/Controllers/ProfileController.php b/app/Http/Controllers/ProfileController.php
+index 0000000..1111111 100644
+--- a/app/Http/Controllers/ProfileController.php
++++ b/app/Http/Controllers/ProfileController.php
+@@ -10,9 +10,11 @@ use Illuminate\Http\Request;
+
+ class ProfileController extends Controller
+ {
+-    public function update(Request $request)
++    public function update(\App\Http\Requests\ProfileUpdateRequest $request)
+     {
+-        auth()->user()->update($request->all());
++        $data = $request->validated();
++        // role_id intentionally not present in ProfileUpdateRequest::rules().
++        auth()->user()->update($data);
+
+         return back()->with('status', 'profile-updated');
+     }
+diff --git a/app/Http/Requests/ProfileUpdateRequest.php b/app/Http/Requests/ProfileUpdateRequest.php
+new file mode 100644
+index 0000000..2222222
+--- /dev/null
++++ b/app/Http/Requests/ProfileUpdateRequest.php
+@@ -0,0 +1,24 @@
++<?php
++
++namespace App\Http\Requests;
++
++use Illuminate\Foundation\Http\FormRequest;
++use Illuminate\Validation\Rule;
++
++class ProfileUpdateRequest extends FormRequest
++{
++    public function authorize(): bool
++    {
++        return $this->user() !== null;
++    }
++
++    public function rules(): array
++    {
++        return [
++            'name'   => ['required', 'string', 'max:255'],
++            'email'  => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user()->id)],
++            'locale' => ['nullable', 'string', 'in:es,en,fr,pt'],
++            // role_id is intentionally NOT here; do not add it.
++        ];
++    }
++}
