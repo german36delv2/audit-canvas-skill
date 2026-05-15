@@ -1,0 +1,21 @@
+{
+  "name": "audit-canvas",
+  "displayName": "Audit Canvas",
+  "version": "0.1.0",
+  "description": "Deep security audit delivered as a Cursor Canvas. Covers modern vibe stacks (Next.js, Supabase, Firebase, Stripe, Expo) AND legacy server-rendered stacks (Laravel, Rails, Django, Express, FastAPI, WordPress). Produces severity-ranked findings with reproducible PoCs and git-applyable patches.",
+  "license": "MIT",
+  "homepage": "https://github.com/CHANGE_ME/audit-canvas",
+  "repository": "https://github.com/CHANGE_ME/audit-canvas",
+  "keywords": [
+    "security",
+    "audit",
+    "canvas",
+    "vibe-coding",
+    "owasp",
+    "laravel",
+    "django",
+    "rails",
+    "wordpress",
+    "nextjs"
+  ]
+}

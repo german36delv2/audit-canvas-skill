@@ -1,0 +1,13 @@
+{
+  "name": "audit-canvas",
+  "displayName": "Audit Canvas",
+  "version": "0.1.0",
+  "description": "Deep security audit for AI-assisted and legacy codebases. Delivers a standalone canvas (Cursor) or Markdown report (Claude Code) with severity-ranked findings, reproducible PoCs and git-applyable patches.",
+  "license": "MIT",
+  "author": {
+    "name": "audit-canvas contributors",
+    "url": "https://github.com/CHANGE_ME/audit-canvas"
+  },
+  "homepage": "https://github.com/CHANGE_ME/audit-canvas",
+  "repository": "https://github.com/CHANGE_ME/audit-canvas"
+}
