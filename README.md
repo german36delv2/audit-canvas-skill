@@ -18,7 +18,7 @@ The current generation of "vibe-coding security skills" share three blind spots:
 
 ## What's in this repository
 
-The published skill is **generic reference material** only: stack checklists, universal/production gates, scripts, and templates filled with placeholders (`REPLACE:`). It does **not** vendor your application code or any private audit output. (A local `research/` directory may exist while developing the skill but is gitignored.)
+The published skill is **generic reference material** only: stack checklists, universal/production gates, scripts, and templates filled with placeholders (`REPLACE:`). It does **not** vendor your application code or any private audit output.
 
 ## Example Canvas (demo)
 
